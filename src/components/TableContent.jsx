@@ -1,42 +1,42 @@
 import React from 'react';
-import {Container, Paper, Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
+import {Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 
-const TableContainer = ({headers, content}) => {
+const TableContent = ({headers, content}) => {
 	return (
-		<Container>
-			<TableContainer component={Paper}>
+			<TableContainer component={Paper} sx={{maxHeight: '70vh'}}>
 				<Table
+					stickyHeader
 					sx={{minWidth: 650}}
-					aria-label='simple table'
+					aria-label='list'
+					size={'small'}
 				>
 					<TableHead>
 						<TableRow>
-							{headers.map((header, index) => <TableCell align={index === 0 ? 'left' : undefined}>{header}</TableCell>)}
+							{headers.map((header, index) => <TableCell key={index.toString()} align={index === 0 ? 'left' : undefined}>{header}</TableCell>)}
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{rows.map((row) => (
+						{content.map((row) => (
 							<TableRow
-								key={row.name}
+								key={row.title}
 								sx={{'&:last-child td, &:last-child th': {border: 0}}}
 							>
 								<TableCell
 									component='th'
 									scope='row'
 								>
-									{row.name}
+									{row.title}
 								</TableCell>
-								<TableCell align='right'>{row.calories}</TableCell>
-								<TableCell align='right'>{row.fat}</TableCell>
-								<TableCell align='right'>{row.carbs}</TableCell>
-								<TableCell align='right'>{row.protein}</TableCell>
+								<TableCell align='center'>{row.unit}</TableCell>
+								<TableCell align='center'>{row.price_retail}</TableCell>
+								<TableCell align='center'>{row.product_types?.title || row.product_type_id}</TableCell>
+								<TableCell align='center'>{row.description}</TableCell>
 							</TableRow>
 						))}
 					</TableBody>
 				</Table>
 			</TableContainer>
-		</Container>
 	);
 };
 
-export default TableContainer;
+export default TableContent;
