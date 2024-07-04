@@ -13,14 +13,14 @@ const BackButton = ({iconColor, bgColor, onClick, size}) => {
 			onClick={onClick ? onClick : backHandler}
 			sx={{
 				color: `${iconColor ? iconColor : '#000'}`,
-				marginTop: '5rem',
-				backgroundColor: `${bgColor ? bgColor : '#c0c0c0'}`,
+				backgroundColor: `${bgColor ? bgColor : '#fff'}`,
 				width: `${size ? size : '5rem'}`,
-				height: `${size ? size : '5rem'}`,
+				height: `${size ? size : '2rem'}`,
 				borderRadius: '1rem',
 				opacity: .7,
 				textAlign: 'center',
 				cursor: 'pointer',
+				marginTop: '2rem',
 				'&:hover': {
 					opacity: 1
 				}

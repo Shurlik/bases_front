@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Container, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 
-const NotFound = () => {
+const NotFoundPage = () => {
 
 	return (
 		<Container sx={{textAlign: 'center'}}>
@@ -17,4 +17,4 @@ const NotFound = () => {
 	);
 };
 
-export default NotFound;
+export default NotFoundPage;
