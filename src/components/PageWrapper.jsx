@@ -1,6 +1,10 @@
 import {Container} from "@mui/material";
+import {useEffect} from "react";
 
-const PageWrapper = ({children}) => {
+const PageWrapper = ({children, title}) => {
+	useEffect(() => {
+		document.title = title ? title : 'Привіт!';
+	}, []);
 	return (
 		<Container
 			sx={{
