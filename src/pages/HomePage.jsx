@@ -10,7 +10,7 @@ const HomePage = () => {
 	const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
 	return (
-		<PageWrapper>
+		<PageWrapper title={'Головна'}>
 			<Typography
 				variant={isSmallScreen ? 'h3' :'h2'}
 				gutterBottom
