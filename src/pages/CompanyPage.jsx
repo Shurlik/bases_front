@@ -6,7 +6,9 @@ import ClientCard from "../components/ClientCard";
 
 
 const CompanyPage = () => {
-	const {data: clients = [], error, isLoading, mutate} = useSWR('/api/clients', () => fetchService('/clients', 'GET'));
+	const {data: clients = []} = useSWR('/api/clients', () => fetchService('/clients', 'GET'));
+	const {data: types = []} = useSWR('/api/types', () => fetchService('/types', 'GET'));
+
 	const theme = useTheme();
 	const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 

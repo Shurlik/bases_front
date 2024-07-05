@@ -25,7 +25,7 @@ const MapModal = ({coords, markerTitle = 'Волинська оптова баз
 			aria-labelledby={markerTitle}
 			sx={{paddingLeft: '2rem', paddingRight: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center'}}
 		>
-			<Box sx={{width: '100%'}}>
+			<Box sx={{width: '100%', borderRadius: '.5rem', overflow: 'hidden'}}>
 				{isLoaded ? <GoogleMap
 					mapContainerStyle={containerStyle}
 					center={coords ? coords : defValue}

@@ -5,7 +5,7 @@ const BackButton = ({iconColor, bgColor, onClick, size}) => {
 	const navigate = useNavigate();
 
 	function backHandler() {
-		navigate(-1);
+		navigate('/');
 	}
 
 	return (

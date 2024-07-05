@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import {
 	Box,
+	Chip,
 	Container,
 	IconButton,
 	InputAdornment,
+	Stack,
 	TextField,
 	Typography,
 	useMediaQuery,
@@ -36,18 +38,42 @@ const CompanyDetailPage = () => {
 		description,
 		address,
 		location,
-		is_active
+		is_active,
+		types
 	} = company;
 	const theme = useTheme();
 	const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
 	const [filter, setFilter] = useState('');
+	const [selectedTypes, setSelectedTypes] = useState([]);
+
+	const [selectedItems, setSelectedItems] = useState([...companyProducts])
 
 	const headers = ['Наіменування',
 		"Одиниця виміру",
 		"Ціна",
 		"Категорія товару",
 		"Опис товару"];
+
+	function handleClick(typeId) {
+		if (selectedTypes.includes(typeId)) {
+			const tmpArr = selectedTypes.filter(e => e !== typeId);
+			if(tmpArr.length > 0){
+				setSelectedTypes([...tmpArr]);
+				const arr = companyProducts.filter(p => tmpArr?.includes(p.product_type_id))
+				setSelectedItems([...arr])
+
+			} else {
+				setSelectedTypes([])
+				setSelectedItems([...companyProducts])
+			}
+		} else {
+			selectedTypes.push(typeId);
+			setSelectedTypes([...selectedTypes]);
+			const arr = companyProducts.filter(p => selectedTypes?.includes(p.product_type_id))
+			setSelectedItems([...arr])
+		}
+	}
 
 	return (
 		<PageWrapper title={title}>
@@ -69,25 +95,25 @@ const CompanyDetailPage = () => {
 				<Typography
 					variant={isSmallScreen ? 'h6' : 'h5'}
 				>{contact_person}</Typography>
-				<IconButton
-					aria-label='На мапі'
-					onClick={() => setModalIsOpen(true)}
-					edge={'end'}
-				>
-					<MapIcon/>
-					<Typography>На мапі</Typography>
-				</IconButton>
 			</Container>
 			<Typography
 				variant={isSmallScreen ? 'h4' : 'h2'}
 				sx={{fontWeight: 'bold'}}
-				gutterBottom
+				// gutterBottom
 			>
 				{title}
 			</Typography>
+			<IconButton
+				aria-label='На мапі'
+				onClick={() => setModalIsOpen(true)}
+				edge={'end'}
+				sx={{marginBottom: '1rem'}}
+			>
+				<MapIcon/>
+				<Typography>На мапі</Typography>
+			</IconButton>
 			<Typography
 				paragraph
-				gutterBottom
 			>
 				{description}
 			</Typography>
@@ -116,8 +142,22 @@ const CompanyDetailPage = () => {
 						</InputAdornment>,
 					} : undefined}
 				/>
+				<Stack
+					direction='row'
+					spacing={2}
+					sx={{margin: '1rem 0'}}
+					justifyContent={'center'}
+				>
+					{JSON.parse(types).map(t => <Chip
+						label={t.title}
+						variant={selectedTypes?.includes(t.id) ? 'filled' : 'outlined'}
+						color='secondary'
+						onClick={() => handleClick(t.id)}
+						key={t.id}
+					/>)}
+				</Stack>
 				<TableContent
-					content={companyProducts.filter(p => p.title.toLowerCase().includes(filter.toLowerCase()))}
+					content={selectedItems.filter(p => p.title.toLowerCase().includes(filter.toLowerCase()))}
 					headers={headers}
 				/>
 				<Box sx={{marginTop: 'auto'}}>
