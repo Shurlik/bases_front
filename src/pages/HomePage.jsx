@@ -2,15 +2,17 @@ import React from 'react';
 import {useNavigate} from "react-router-dom";
 import PageWrapper from "../components/PageWrapper";
 import CompanyPage from "./CompanyPage";
-import {Typography} from "@mui/material";
+import {Typography, useMediaQuery, useTheme} from "@mui/material";
 
 const HomePage = () => {
 	const navigate = useNavigate();
+	const theme = useTheme();
+	const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
 	return (
 		<PageWrapper>
 			<Typography
-				variant='h2'
+				variant={isSmallScreen ? 'h3' :'h2'}
 				gutterBottom
 			>
 				Здоровенькі були!

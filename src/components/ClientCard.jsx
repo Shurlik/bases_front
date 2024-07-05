@@ -18,7 +18,7 @@ const ClientCard = ({client}) => {
 				borderRadius: '.5rem',
 				textAlign: 'left',
 				cursor: 'pointer',
-				padding: '.5rem 0',
+				padding: '.5rem',
 					backgroundColor: '#ffffff55',
 				"&:hover": {
 					backgroundColor: '#ffffffbb'

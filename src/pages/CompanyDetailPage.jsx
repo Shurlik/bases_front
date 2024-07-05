@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Container, Typography} from "@mui/material";
+import {Box, Container, Typography, useMediaQuery, useTheme} from "@mui/material";
 import BackButton from "../components/BackButton";
 import PageWrapper from "../components/PageWrapper";
 import {fetchService} from "../services/fetchService";
@@ -25,6 +25,8 @@ const CompanyDetailPage = () => {
 		location,
 		is_active
 	} = company;
+	const theme = useTheme();
+	const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
 	const headers = ['Наіменування',
 		"Одиниця виміру",
@@ -34,19 +36,27 @@ const CompanyDetailPage = () => {
 
 	return (
 		<PageWrapper>
-			<Container sx={{display: 'flex', justifyContent: 'center',gap: '5rem', fontSize: '1.3rem'}}>
+			<Container
+				sx={{
+					display: 'flex',
+					flexWrap: 'wrap',
+					justifyContent: 'center',
+					gap: {'xs': '1rem', 'md': '3rem'},
+					fontSize: {'xs': '.8rem', 'md': '1.3rem'}
+				}}
+			>
 				<Typography
-					variant='h5'
+					variant={isSmallScreen ? 'h6' : 'h5'}
 				>{email} </Typography>
 				<Typography
-					variant='h5'
+					variant={isSmallScreen ? 'h6' : 'h5'}
 				>{phone}</Typography>
 				<Typography
-					variant='h5'
+					variant={isSmallScreen ? 'h6' : 'h5'}
 				>{contact_person}</Typography>
 			</Container>
 			<Typography
-				variant='h2'
+				variant={isSmallScreen? 'h4': 'h2'}
 				sx={{fontWeight: 'bold'}}
 				gutterBottom
 			>
