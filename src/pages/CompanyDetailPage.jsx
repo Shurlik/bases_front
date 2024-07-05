@@ -15,6 +15,8 @@ import {fetchService} from "../services/fetchService";
 import {useLoaderData} from "react-router-dom";
 import TableContent from "../components/TableContent";
 import ClearIcon from "@mui/icons-material/Clear";
+import MapIcon from '@mui/icons-material/Map';
+import MapModal from "../components/MapModal";
 
 export async function loader({params}) {
 	const company = await fetchService(`/clients/${params.id}`, 'GET');
@@ -23,6 +25,7 @@ export async function loader({params}) {
 }
 
 const CompanyDetailPage = () => {
+	const [modalIsOpen, setModalIsOpen] = useState(false);
 	const {company, companyProducts} = useLoaderData();
 	const {
 		id,
@@ -66,6 +69,14 @@ const CompanyDetailPage = () => {
 				<Typography
 					variant={isSmallScreen ? 'h6' : 'h5'}
 				>{contact_person}</Typography>
+				<IconButton
+					aria-label='На мапі'
+					onClick={() => setModalIsOpen(true)}
+					edge={'end'}
+				>
+					<MapIcon/>
+					<Typography>На мапі</Typography>
+				</IconButton>
 			</Container>
 			<Typography
 				variant={isSmallScreen ? 'h4' : 'h2'}
@@ -74,7 +85,6 @@ const CompanyDetailPage = () => {
 			>
 				{title}
 			</Typography>
-
 			<Typography
 				paragraph
 				gutterBottom
@@ -104,7 +114,7 @@ const CompanyDetailPage = () => {
 								<ClearIcon/>
 							</IconButton>
 						</InputAdornment>,
-					} : undefined }
+					} : undefined}
 				/>
 				<TableContent
 					content={companyProducts.filter(p => p.title.toLowerCase().includes(filter.toLowerCase()))}
@@ -114,6 +124,12 @@ const CompanyDetailPage = () => {
 					<BackButton/>
 				</Box>
 			</Box>
+			<MapModal
+				markerTitle={title}
+				isOpen={modalIsOpen}
+				onClose={() => setModalIsOpen(false)}
+				coords={location ? JSON.parse(location) : undefined}
+			/>
 		</PageWrapper>
 	);
 };
