@@ -3,7 +3,7 @@ import {Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead
 
 const TableContent = ({headers, content}) => {
 	return (
-			<TableContainer component={Paper} sx={{maxHeight: '70vh'}}>
+			<TableContainer component={Paper} sx={{maxHeight: '60vh'}}>
 				<Table
 					stickyHeader
 					sx={{minWidth: 650}}

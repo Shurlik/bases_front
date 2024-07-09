@@ -1,11 +1,11 @@
 import React from 'react';
-import {Container, Typography} from "@mui/material";
+import {Box, Chip, Container, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 
 const ClientCard = ({client}) => {
-	const {id, email, is_active, phone, title,short_description} = client;
+	const {id, email, is_active, phone, title, short_description, types} = client;
 	const navigate = useNavigate();
-
+	
 	function detailHandler() {
 		navigate(`/companies/${id}`);
 	}
@@ -19,7 +19,7 @@ const ClientCard = ({client}) => {
 				textAlign: 'left',
 				cursor: 'pointer',
 				padding: '.5rem',
-					backgroundColor: '#ffffff55',
+				backgroundColor: '#ffffff55',
 				"&:hover": {
 					backgroundColor: '#ffffffbb'
 				}
@@ -31,23 +31,25 @@ const ClientCard = ({client}) => {
 			>
 				{title}
 			</Typography>
-			<Typography
-				variant='h6'
-			>Контакти:</Typography>
-			<Typography>
-				{email}
-			</Typography>
-			<Typography
-				gutterBottom>
-				{phone}
-			</Typography>
-			<Typography
-				variant='h6'
-			>Опис:</Typography>
 			<Typography>
 				{short_description}
-			</Typography>
 
+			</Typography>
+			<Box
+				sx={{
+					display: 'flex',
+					flexWrap: 'wrap',
+					gap: '.5rem',
+					marginTop: '1rem'
+				}}
+			>
+				{types && JSON.parse(types).map(t => <Chip
+					label={t.title}
+					key={t.id}
+					size='small'
+					variant='outlined'
+				/>)}
+			</Box>
 		</Container>
 	);
 };
