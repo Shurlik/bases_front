@@ -20,7 +20,6 @@ const BackButton = ({iconColor, bgColor, onClick, size}) => {
 				opacity: .7,
 				textAlign: 'center',
 				cursor: 'pointer',
-				marginTop: '2rem',
 				'&:hover': {
 					opacity: 1
 				}

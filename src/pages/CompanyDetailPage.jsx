@@ -18,7 +18,9 @@ import {useLoaderData} from "react-router-dom";
 import TableContent from "../components/TableContent";
 import ClearIcon from "@mui/icons-material/Clear";
 import MapIcon from '@mui/icons-material/Map';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import MapModal from "../components/MapModal";
+import saveToXls from "../services/saveToXls";
 
 export async function loader({params}) {
 	const company = await fetchService(`/clients/${params.id}`, 'GET');
@@ -47,7 +49,7 @@ const CompanyDetailPage = () => {
 	const [filter, setFilter] = useState('');
 	const [selectedTypes, setSelectedTypes] = useState([]);
 
-	const [selectedItems, setSelectedItems] = useState([...companyProducts])
+	const [selectedItems, setSelectedItems] = useState([...companyProducts]);
 
 	const headers = ['Наіменування',
 		"Одиниця виміру",
@@ -58,25 +60,42 @@ const CompanyDetailPage = () => {
 	function handleClick(typeId) {
 		if (selectedTypes.includes(typeId)) {
 			const tmpArr = selectedTypes.filter(e => e !== typeId);
-			if(tmpArr.length > 0){
+			if (tmpArr.length > 0) {
 				setSelectedTypes([...tmpArr]);
-				const arr = companyProducts.filter(p => tmpArr?.includes(p.product_type_id))
-				setSelectedItems([...arr])
+				const arr = companyProducts.filter(p => tmpArr?.includes(p.product_type_id));
+				setSelectedItems([...arr]);
 
 			} else {
-				setSelectedTypes([])
-				setSelectedItems([...companyProducts])
+				setSelectedTypes([]);
+				setSelectedItems([...companyProducts]);
 			}
 		} else {
 			selectedTypes.push(typeId);
 			setSelectedTypes([...selectedTypes]);
-			const arr = companyProducts.filter(p => selectedTypes?.includes(p.product_type_id))
-			setSelectedItems([...arr])
+			const arr = companyProducts.filter(p => selectedTypes?.includes(p.product_type_id));
+			setSelectedItems([...arr]);
 		}
+	}
+
+	function downloadHandler() {
+		const data = selectedItems.filter(p => p.title.toLowerCase().includes(filter.toLowerCase()));
+		const dataToSave = data.map(d => {
+			return {
+				'Наіменування': d.title,
+				'Одиниця виміру': d.unit,
+				'Ціна': d.price_retail,
+				'Категорія товару': d.product_types.title,
+				'Опис товару': d.description,
+			};
+		});
+		saveToXls(dataToSave, title);
 	}
 
 	return (
 		<PageWrapper title={title}>
+			<Box sx={{marginTop: '.5rem', display: 'flex', alignItems: 'center'}}>
+				<BackButton/>
+			</Box>
 			<Container
 				sx={{
 					display: 'flex',
@@ -156,13 +175,19 @@ const CompanyDetailPage = () => {
 						key={t.id}
 					/>)}
 				</Stack>
+				<IconButton
+					aria-label='На мапі'
+					onClick={downloadHandler}
+					edge={'end'}
+					sx={{width: '13rem', margin: '.5rem auto'}}
+				>
+					<FileDownloadIcon/>
+					<Typography>Завантажити</Typography>
+				</IconButton>
 				<TableContent
 					content={selectedItems.filter(p => p.title.toLowerCase().includes(filter.toLowerCase()))}
 					headers={headers}
 				/>
-				<Box sx={{marginTop: 'auto'}}>
-					<BackButton/>
-				</Box>
 			</Box>
 			<MapModal
 				markerTitle={title}

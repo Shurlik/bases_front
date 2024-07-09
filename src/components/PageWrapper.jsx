@@ -8,7 +8,10 @@ const PageWrapper = ({children, title}) => {
 	return (
 		<Container
 			sx={{
-				backgroundColor: '#d0d0d0', height: '100%', textAlign: 'center', paddingTop: '1rem'
+				backgroundColor: '#d0d0d0',
+				textAlign: 'center',
+				paddingTop: '1rem',
+				paddingBottom: '2rem',
 			}}
 		>
 			{children}
