@@ -77,6 +77,9 @@ const CompanyDetailPage = () => {
 
 	return (
 		<PageWrapper title={title}>
+			<Box sx={{marginTop: '.5rem', display: 'flex', alignItems: 'center'}}>
+				<BackButton/>
+			</Box>
 			<Container
 				sx={{
 					display: 'flex',
@@ -160,9 +163,7 @@ const CompanyDetailPage = () => {
 					content={selectedItems.filter(p => p.title.toLowerCase().includes(filter.toLowerCase()))}
 					headers={headers}
 				/>
-				<Box sx={{marginTop: 'auto'}}>
-					<BackButton/>
-				</Box>
+
 			</Box>
 			<MapModal
 				markerTitle={title}

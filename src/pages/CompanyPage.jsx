@@ -13,12 +13,12 @@ const CompanyPage = () => {
 	const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
 	return (
-		<Container sx={{marginTop: {'xs': '.8rem', 'md':'2rem'}}}>
+		<Container sx={{marginTop: {'xs': '.8rem', 'md':'2rem'}, marginBottom: {'xs': '.8rem', 'md':'2rem'}}}>
 			<Typography
 				variant={isSmallScreen ? 'h5' : 'h4'}
 				gutterBottom
 			>
-				Наші компанії
+				Продавці
 				<Typography
 					paragraph
 					gutterBottom
